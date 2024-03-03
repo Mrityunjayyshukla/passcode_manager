@@ -134,52 +134,124 @@ class _ListPageState extends State<ListPage> {
         child: const Icon(Icons.add),
       ),
 
-      body: ListView.builder(
-        itemCount: records.length,
-        itemBuilder: (context, index){
-          final record=records[index];
-          return ListTile(
-            title: Text('Title: ${record['Title']}'),
-            subtitle: Column(
-              children: [
-                Text('Email: ${record['Email']}'),
-                Text('Password: ${record['Password']}')
-              ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            const Text(
+              "Passcode Manager is an app where you can store you passwords securely. This app is perfect for you if you always forget your passwords",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-            onTap: (){
-              showModalBottomSheet(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-                ),
-                backgroundColor: Colors.purple[50],
-                isScrollControlled: true,
-                context: context, 
-                builder: (BuildContext context){
-                  return PasskeyBuildSheet(index: index, records: records);
+            const SizedBox(height: 16),
+            SizedBox(
+              height: MediaQuery.of(context).size.height-200,
+              child: ListView.separated(
+                physics: const BouncingScrollPhysics(),
+                itemCount: records.length,
+                itemBuilder: (context, index){
+                  final record=records[index];
+                  return GestureDetector(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.purple[100],
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${record['Title']}",
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: (){_navigateToEditPage(record);},
+                                    child: const Icon(Icons.edit),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  GestureDetector(
+                                    onTap: (){_deleteRecord(index);},
+                                    child: const Icon(Icons.delete),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          const Divider(
+                            thickness: 2,
+                            color: Colors.black,
+                          ),
+                          const SizedBox(height: 8),
+                          const Text(
+                            "Email or Username",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            "${record['Email']}",
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            "Password",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          const Text(
+                            "********",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                        ],
+                      ),
+                    ),
+
+                    onTap: (){
+                      showModalBottomSheet(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                        ),
+                        backgroundColor: Colors.purple[50],
+                        isScrollControlled: true,
+                        context: context, 
+                        builder: (BuildContext context){
+                          return PasskeyBuildSheet(index: index, records: records);
+                        },
+                      );
+                    },
+                  );
+                }, 
+                separatorBuilder: (BuildContext context, int index) {
+                  return const SizedBox(height: 16);
                 },
-              );
-            //   // Navigate to RecordetailsPage when a record is tapped
-            //   Navigator.push(context, MaterialPageRoute(builder: (context)=>RecordDetailsPage(record:record)));
-            },
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () {
-                    _navigateToEditPage(record);
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {
-                    _deleteRecord(index);
-                  },
-                ),
-              ],
-            )
-          );
-        },
+              ),
+            ),
+          ],
+        ),
       )
     );
   }
