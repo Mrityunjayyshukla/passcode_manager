@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:passcodemanager/add_entry.dart';
 import 'package:passcodemanager/edit_entry.dart';
-import 'package:passcodemanager/entry_details_page.dart';
+import 'package:passcodemanager/passkey.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -147,8 +147,19 @@ class _ListPageState extends State<ListPage> {
               ],
             ),
             onTap: (){
-              // Navigate to RecordetailsPage when a record is tapped
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>RecordDetailsPage(record:record)));
+              showModalBottomSheet(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                ),
+                backgroundColor: Colors.purple[50],
+                isScrollControlled: true,
+                context: context, 
+                builder: (BuildContext context){
+                  return PasskeyBuildSheet(index: index, records: records);
+                },
+              );
+            //   // Navigate to RecordetailsPage when a record is tapped
+            //   Navigator.push(context, MaterialPageRoute(builder: (context)=>RecordDetailsPage(record:record)));
             },
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
