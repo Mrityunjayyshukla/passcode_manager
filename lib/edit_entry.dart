@@ -14,12 +14,14 @@ class _EditEntryState extends State<EditEntry> {
   late TextEditingController titleController;
   late TextEditingController emailController;
   late TextEditingController passwordController;
+  late TextEditingController confirmPasswordController;
 
   @override
   void initState() {
     titleController = TextEditingController(text: widget.record['Title'] ?? '');
     emailController = TextEditingController(text: widget.record['Email'] ?? '');
     passwordController = TextEditingController(text: "");
+    confirmPasswordController = TextEditingController(text: "");
     super.initState();
   }
 
@@ -50,97 +52,153 @@ class _EditEntryState extends State<EditEntry> {
               borderRadius: BorderRadius.circular(16),
             ),
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Title",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                const Divider(
-                  thickness: 2,
-                  color: Colors.black,
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  "Title",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: titleController,
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  "Email or Username",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: emailController,
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  "Password",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: passwordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(labelText: "Password"),
-                ),
-                const SizedBox(height: 32),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: (){
-                      //Get the updated details from text controllers
-                      Map<String, String> updatedRecord = {
-                        'Title': titleController.text,
-                        'Email': emailController.text,
-                        'Password': passwordController.text,
-                      };
-                  
-                      // Trigger the callback to update record
-                      // on the List Page
-                      widget.onUpdate(updatedRecord);
-                  
-                      // Navigate back to ListPage
-                      Navigator.pop(context);
-                    },
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.save, color: Colors.purple[400],),
-                        const SizedBox(width: 8),
-                        Text(
-                          "Save",
-                          style: TextStyle(
-                            color: Colors.purple[400],
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Title",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 4),
+                  const Divider(
+                    thickness: 2,
+                    color: Colors.black,
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    "Title",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 2,color: Colors.purple.shade400),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: TextField(
+                      controller: titleController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    "Email or Username",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 2,color: Colors.purple.shade400),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: TextField(
+                      controller: emailController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    "Password",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 2,color: Colors.purple.shade400),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: TextField(
+                      controller: passwordController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                      obscureText: true,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    "Confirm Password",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 2,color: Colors.purple.shade400),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: TextField(
+                      controller: passwordController,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                      obscureText: true,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: (){
+                        if (passwordController.text==confirmPasswordController.text){
+                          //Get the updated details from text controllers
+                          Map<String, String> updatedRecord = {
+                            'Title': titleController.text,
+                            'Email': emailController.text,
+                            'Password': passwordController.text,
+                          };
+                      
+                          // Trigger the callback to update record
+                          // on the List Page
+                          widget.onUpdate(updatedRecord);
+                      
+                          // Navigate back to ListPage
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.save, color: Colors.purple[400],),
+                          const SizedBox(width: 8),
+                          Text(
+                            "Save",
+                            style: TextStyle(
+                              color: Colors.purple[400],
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
