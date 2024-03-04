@@ -111,6 +111,12 @@ class _ListPageState extends State<ListPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isEmptyRecord;
+    if (records.isEmpty){
+      isEmptyRecord=true;
+    } else {
+      isEmptyRecord=false;
+    }
     return Scaffold(
       backgroundColor: Colors.purple[50],
 
@@ -124,6 +130,12 @@ class _ListPageState extends State<ListPage> {
             fontSize: 24,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: (){}, 
+            icon: const Icon(Icons.settings),
+          )
+        ],
       ),
 
       // Floating Action Button
@@ -147,7 +159,15 @@ class _ListPageState extends State<ListPage> {
               ),
             ),
             const SizedBox(height: 16),
-            SizedBox(
+            (isEmptyRecord==true) 
+            ? const Text(
+              "No Record Found",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+            : SizedBox(
               height: MediaQuery.of(context).size.height-200,
               child: ListView.separated(
                 physics: const BouncingScrollPhysics(),

@@ -11,6 +11,14 @@ class RecordDetailsPage extends StatelessWidget {
 
       // Appbar
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: (){
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
         backgroundColor: Colors.purple[100],
         title: const Text(
           "Passcode Manager",
@@ -57,7 +65,7 @@ class RecordDetailsPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
+                  SelectableText(
                     record['Title']!,
                     style: const TextStyle(
                       fontSize: 18,
@@ -73,7 +81,7 @@ class RecordDetailsPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
+                  SelectableText(
                     record['Email']!,
                     style: const TextStyle(
                       fontSize: 18,
@@ -89,7 +97,7 @@ class RecordDetailsPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
+                  SelectableText(
                     record['Password']!,
                     style: const TextStyle(
                       fontSize: 18,
