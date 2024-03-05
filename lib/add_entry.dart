@@ -19,11 +19,11 @@ class _AddEntryState extends State<AddEntry> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.purple[50],
+      backgroundColor: Theme.of(context).colorScheme.background,
 
       // Appbar
       appBar: AppBar(
-        backgroundColor: Colors.purple[100],
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text(
           "Add Entry",
           style: TextStyle(
@@ -39,7 +39,7 @@ class _AddEntryState extends State<AddEntry> {
         child: Center(
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.purple[100],
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.circular(16),
             ),
             padding: const EdgeInsets.all(16),
@@ -56,9 +56,9 @@ class _AddEntryState extends State<AddEntry> {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  const Divider(
+                  Divider(
                     thickness: 2,
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.tertiary
                   ),
                   const SizedBox(height: 8),
                   const Text(
@@ -72,7 +72,7 @@ class _AddEntryState extends State<AddEntry> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
-                      border: Border.all(width: 2,color: Colors.purple.shade400),
+                      border: Border.all(width: 2,color: Theme.of(context).colorScheme.tertiary),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextField(
@@ -94,7 +94,7 @@ class _AddEntryState extends State<AddEntry> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
-                      border: Border.all(width: 2,color: Colors.purple.shade400),
+                      border: Border.all(width: 2,color: Theme.of(context).colorScheme.tertiary),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextField(
@@ -116,7 +116,7 @@ class _AddEntryState extends State<AddEntry> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
-                      border: Border.all(width: 2,color: Colors.purple.shade400),
+                      border: Border.all(width: 2,color: Theme.of(context).colorScheme.tertiary),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextField(
@@ -139,7 +139,7 @@ class _AddEntryState extends State<AddEntry> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
-                      border: Border.all(width: 2,color: Colors.purple.shade400),
+                      border: Border.all(width: 2,color: Theme.of(context).colorScheme.tertiary),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextField(
@@ -152,40 +152,47 @@ class _AddEntryState extends State<AddEntry> {
                   ),
                   const SizedBox(height: 32),
                   Center(
-                    child: ElevatedButton(
-                      onPressed: (){
-                        if (passwordController.text==confirmPasswordController.text){
-                          // Get the details from the text controllers
-                          Map<String, String> newRecord = {
-                            'Title': titleController.text,
-                            'Email': emailController.text,
-                            'Password': passwordController.text,
-                          };
-                
-                          // Trigger the callback to add the new
-                          // record on the ListPage
-                          widget.onAdd(newRecord);
-                
-                          // Navigate back to list page
-                          Navigator.pop(context);
-                        }
-                        
-                      }, 
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.save, color: Colors.purple[400],),
-                          const SizedBox(width: 8),
-                          Text(
-                            "Add Entry",
-                            style: TextStyle(
-                              color: Colors.purple[400],
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 4,horizontal: 16),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        color: Theme.of(context).colorScheme.secondary
+                      ),
+                      child: IconButton(
+                        onPressed: (){
+                          if (passwordController.text==confirmPasswordController.text){
+                            // Get the details from the text controllers
+                            Map<String, String> newRecord = {
+                              'Title': titleController.text,
+                              'Email': emailController.text,
+                              'Password': passwordController.text,
+                            };
+                                      
+                            // Trigger the callback to add the new
+                            // record on the ListPage
+                            widget.onAdd(newRecord);
+                                      
+                            // Navigate back to list page
+                            Navigator.pop(context);
+                          }
+                          
+                        }, 
+                        icon: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.save, color: Theme.of(context).colorScheme.tertiary,),
+                            const SizedBox(width: 8),
+                            Text(
+                              "Add Entry",
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.tertiary,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   )
@@ -195,46 +202,6 @@ class _AddEntryState extends State<AddEntry> {
           ),
         ),
       ),
-      // body: Padding(
-      //   padding: const EdgeInsets.all(16),
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.stretch,
-      //     children: [
-      //       TextField(
-      //         controller: titleController,
-      //         decoration: const InputDecoration(labelText: 'Title'),
-      //       ),
-      //       TextField(
-      //         controller: emailController,
-      //         decoration: const InputDecoration(labelText: 'Email'),
-      //       ),
-      //       TextField(
-      //         controller: passwordController,
-      //         obscureText: true,
-      //         decoration: const InputDecoration(labelText: 'Password'),
-      //       ),
-      //       const SizedBox(height: 16),
-      //       ElevatedButton(
-      //         onPressed: (){
-      //           // Get the details from the text controllers
-      //           Map<String, String> newRecord = {
-      //             'Title': titleController.text,
-      //             'Email': emailController.text,
-      //             'Password': passwordController.text,
-      //           };
-
-      //           // Trigger the callback to add the new
-      //           // record on the ListPage
-      //           widget.onAdd(newRecord);
-
-      //           // Navigate back to list page
-      //           Navigator.pop(context);
-      //         }, 
-      //         child: const Text("Save"),
-      //       )
-      //     ],
-      //   ),
-      // ),
     );
   }
 }

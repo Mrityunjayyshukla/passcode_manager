@@ -7,7 +7,7 @@ class RecordDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.purple[50],
+      backgroundColor: Theme.of(context).colorScheme.background,
 
       // Appbar
       appBar: AppBar(
@@ -17,9 +17,9 @@ class RecordDetailsPage extends StatelessWidget {
             Navigator.pop(context);
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
         ),
-        backgroundColor: Colors.purple[100],
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text(
           "Passcode Manager",
           style: TextStyle(
@@ -35,7 +35,7 @@ class RecordDetailsPage extends StatelessWidget {
         child: Center(
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.purple[100],
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.circular(16),
             ),
             padding: const EdgeInsets.all(16),
@@ -52,9 +52,9 @@ class RecordDetailsPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  const Divider(
+                  Divider(
                     thickness: 2,
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                   const SizedBox(height: 8),
                   const Text(

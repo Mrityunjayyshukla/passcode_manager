@@ -45,7 +45,11 @@ class _PasskeyBuildSheetState extends State<PasskeyBuildSheet> {
   @override
   Widget build(BuildContext context) {
     final record=widget.records[widget.index];
-    return Padding(
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(topLeft: Radius.circular(24),topRight: Radius.circular(24)),
+        color: Theme.of(context).colorScheme.background,
+      ),
       padding: const EdgeInsets.all(16),
       child: Wrap(
         alignment: WrapAlignment.center,
@@ -64,7 +68,7 @@ class _PasskeyBuildSheetState extends State<PasskeyBuildSheet> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        border: Border.all(width: 2, color: Colors.purple),
+                        border: Border.all(width: 2, color: Theme.of(context).colorScheme.tertiary),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       height: 68,
@@ -91,7 +95,7 @@ class _PasskeyBuildSheetState extends State<PasskeyBuildSheet> {
 
                     Container(
                       decoration: BoxDecoration(
-                        border: Border.all(width: 2, color: Colors.purple),
+                        border: Border.all(width: 2, color: Theme.of(context).colorScheme.tertiary),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       height: 68,
@@ -118,7 +122,7 @@ class _PasskeyBuildSheetState extends State<PasskeyBuildSheet> {
 
                     Container(
                       decoration: BoxDecoration(
-                        border: Border.all(width: 2, color: Colors.purple),
+                        border: Border.all(width: 2, color: Theme.of(context).colorScheme.tertiary),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       height: 68,
@@ -145,7 +149,7 @@ class _PasskeyBuildSheetState extends State<PasskeyBuildSheet> {
 
                     Container(
                       decoration: BoxDecoration(
-                        border: Border.all(width: 2, color: Colors.purple),
+                        border: Border.all(width: 2, color: Theme.of(context).colorScheme.tertiary),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       height: 68,
@@ -174,20 +178,28 @@ class _PasskeyBuildSheetState extends State<PasskeyBuildSheet> {
               ),
             ),
           ),
-          TextButton(
-            onPressed: (){
-              if (pin11+pin12+pin13+pin14=="2505"){
-                isPasskey=true;
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>RecordDetailsPage(record:record)));
-              } else {
-                isPasskey=false;
-              }
-            }, 
-            child: const Text(
-              "Enter",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 16),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondary,
+              borderRadius: BorderRadius.circular(32)
+            ),
+            child: TextButton(
+              onPressed: (){
+                if (pin11+pin12+pin13+pin14=="2505"){
+                  isPasskey=true;
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RecordDetailsPage(record:record)));
+                } else {
+                  isPasskey=false;
+                }
+              }, 
+              child: Text(
+                "Enter",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.tertiary,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           )

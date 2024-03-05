@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:passcodemanager/add_entry.dart';
+import 'package:passcodemanager/components.dart';
 import 'package:passcodemanager/edit_entry.dart';
 import 'package:passcodemanager/passkey.dart';
+import 'package:passcodemanager/settings_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -17,10 +21,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: lightMode,
+      darkTheme: darkMode,
       home: const ListPage(),
     );
   }
@@ -118,11 +120,11 @@ class _ListPageState extends State<ListPage> {
       isEmptyRecord=false;
     }
     return Scaffold(
-      backgroundColor: Colors.purple[50],
+      backgroundColor: Theme.of(context).colorScheme.background,
 
       // Appbar
       appBar: AppBar(
-        backgroundColor: Colors.purple[100],
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text(
           "Passcode Manager",
           style: TextStyle(
@@ -132,8 +134,12 @@ class _ListPageState extends State<ListPage> {
         ),
         actions: [
           IconButton(
-            onPressed: (){}, 
-            icon: const Icon(Icons.settings),
+            onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>const SettingsPage()));
+            }, 
+            icon: const Icon(
+              Icons.settings,
+            ),
           )
         ],
       ),
@@ -143,8 +149,11 @@ class _ListPageState extends State<ListPage> {
         onPressed: (){
           Navigator.push(context, MaterialPageRoute(builder: (context)=>AddEntry(onAdd: _addRecord,)));
         },
-        backgroundColor: Colors.purple[100],
-        child: const Icon(Icons.add),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        child: Icon(
+          Icons.add,
+          color: Theme.of(context).colorScheme.tertiary,
+        ),
       ),
 
       body: Padding(
@@ -159,6 +168,14 @@ class _ListPageState extends State<ListPage> {
               ),
             ),
             const SizedBox(height: 16),
+            const Text(
+              "Hello, User!",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
             (isEmptyRecord==true) 
             ? const Text(
               "No Record Found",
@@ -168,7 +185,7 @@ class _ListPageState extends State<ListPage> {
               ),
             )
             : SizedBox(
-              height: MediaQuery.of(context).size.height-200,
+              height: MediaQuery.of(context).size.height-243,
               child: ListView.separated(
                 physics: const BouncingScrollPhysics(),
                 itemCount: records.length,
@@ -178,7 +195,7 @@ class _ListPageState extends State<ListPage> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        color: Colors.purple[100],
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
                       child: Column(
@@ -210,9 +227,9 @@ class _ListPageState extends State<ListPage> {
                             ],
                           ),
                           const SizedBox(height: 4),
-                          const Divider(
+                          Divider(
                             thickness: 2,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                           const SizedBox(height: 8),
                           const Text(
