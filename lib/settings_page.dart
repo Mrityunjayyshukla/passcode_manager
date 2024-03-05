@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:passcodemanager/components.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -8,6 +10,15 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  bool isEditClicked=false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadUsername();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +37,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Text(
+        title: const Text(
           "Settings",
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -36,21 +47,21 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
 
       // Body
-      body: const SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        physics: BouncingScrollPhysics(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Settings",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            SizedBox(height: 24),
-            Row(
+            const SizedBox(height: 24),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -61,10 +72,76 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ),
               ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Add a Username",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 2,color: Theme.of(context).colorScheme.tertiary),
+                      borderRadius: BorderRadius.circular(8)
+                    ),
+                    child: Text(
+                      isEditClicked? 'Cancel':'Edit',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  onTap: (){
+                    setState(() {
+                      isEditClicked=!isEditClicked;
+                      if (!isEditClicked){
+                        _saveUsername();
+                      }
+                    });
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            isEditClicked?
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              decoration: BoxDecoration(
+                border: Border.all(width: 2,color: Theme.of(context).colorScheme.tertiary),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const TextField(
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                ),
+              ),
             )
+            : const SizedBox.shrink()
           ],
         ),
       ),
     );
+  }
+
+  void _saveUsername() async {
+    String enteredUsername = usernameEditingController.text;
+    // Save the entered username to SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('username', enteredUsername);
+    usernameEditingController.clear(); // Clear the text field after saving
+    _loadUsername(); // Reload the username to update the displayed value in ListPage
+  }
+
+  void _loadUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String savedUsername = prefs.getString('username') ?? '';
+    usernameEditingController.text=savedUsername;
   }
 }

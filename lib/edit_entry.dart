@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class EditEntry extends StatefulWidget {
   final Map<String, String> record;
@@ -27,6 +28,8 @@ class _EditEntryState extends State<EditEntry> {
 
   @override
   Widget build(BuildContext context) {
+    bool _obscureText = true;
+    bool _obscureConfirmText=true;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
 
@@ -81,7 +84,9 @@ class _EditEntryState extends State<EditEntry> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
-                      border: Border.all(width: 2,color: Theme.of(context).colorScheme.tertiary),
+                      border: Border.all(
+                          width: 2,
+                          color: Theme.of(context).colorScheme.tertiary),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextField(
@@ -103,7 +108,9 @@ class _EditEntryState extends State<EditEntry> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
-                      border: Border.all(width: 2,color: Theme.of(context).colorScheme.tertiary),
+                      border: Border.all(
+                          width: 2,
+                          color: Theme.of(context).colorScheme.tertiary),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextField(
@@ -125,15 +132,24 @@ class _EditEntryState extends State<EditEntry> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
-                      border: Border.all(width: 2,color: Theme.of(context).colorScheme.tertiary),
+                      border: Border.all(
+                          width: 2,
+                          color: Theme.of(context).colorScheme.tertiary),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextField(
                       controller: passwordController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
+                        suffixIcon: GestureDetector(
+                            child: const Icon(Icons.visibility),
+                            onTap: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            }),
                         border: InputBorder.none,
                       ),
-                      obscureText: true,
+                      obscureText: _obscureText,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -148,39 +164,50 @@ class _EditEntryState extends State<EditEntry> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
-                      border: Border.all(width: 2,color: Theme.of(context).colorScheme.tertiary),
+                      border: Border.all(
+                          width: 2,
+                          color: Theme.of(context).colorScheme.tertiary),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextField(
-                      controller: passwordController,
-                      decoration: const InputDecoration(
+                      controller: confirmPasswordController,
+                      decoration: InputDecoration(
+                        suffixIcon: GestureDetector(
+                            child: const Icon(Icons.visibility),
+                            onTap: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            }),
                         border: InputBorder.none,
                       ),
-                      obscureText: true,
+                      obscureText: _obscureConfirmText,
                     ),
                   ),
                   const SizedBox(height: 32),
                   Center(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 16),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 16),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(32),
                         color: Theme.of(context).colorScheme.secondary,
                       ),
                       child: IconButton(
-                        onPressed: (){
-                          if (passwordController.text==confirmPasswordController.text){
+                        onPressed: () {
+                          if (passwordController.text ==
+                              confirmPasswordController.text) {
                             //Get the updated details from text controllers
                             Map<String, String> updatedRecord = {
                               'Title': titleController.text,
                               'Email': emailController.text,
                               'Password': passwordController.text,
                             };
-                        
+
                             // Trigger the callback to update record
                             // on the List Page
                             widget.onUpdate(updatedRecord);
-                        
+
                             // Navigate back to ListPage
                             Navigator.pop(context);
                           }
@@ -189,7 +216,10 @@ class _EditEntryState extends State<EditEntry> {
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.save, color: Theme.of(context).colorScheme.tertiary,),
+                            Icon(
+                              Icons.save,
+                              color: Theme.of(context).colorScheme.tertiary,
+                            ),
                             const SizedBox(width: 8),
                             Text(
                               "Save",

@@ -11,6 +11,9 @@ class AddEntry extends StatefulWidget {
 
 class _AddEntryState extends State<AddEntry> {
 
+  bool _obscureText = true;
+  bool _obscureConfirmText=true;
+
   TextEditingController titleController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -120,9 +123,16 @@ class _AddEntryState extends State<AddEntry> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextField(
-                      obscureText: true,
+                      obscureText: _obscureText,
                       controller: passwordController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
+                        suffixIcon: GestureDetector(
+                            child: const Icon(Icons.visibility),
+                            onTap: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            }),
                         border: InputBorder.none,
                       ),
                     ),
@@ -143,9 +153,16 @@ class _AddEntryState extends State<AddEntry> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextField(
-                      obscureText: true,
+                      obscureText: _obscureConfirmText,
                       controller: confirmPasswordController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
+                        suffixIcon: GestureDetector(
+                            child: const Icon(Icons.visibility),
+                            onTap: () {
+                              setState(() {
+                                _obscureConfirmText = !_obscureConfirmText;
+                              });
+                            }),
                         border: InputBorder.none,
                       ),
                     ),

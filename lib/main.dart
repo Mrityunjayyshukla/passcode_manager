@@ -36,6 +36,7 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+  String _username='';
   // This is the list of all the records which are there.
   List<Map<String, String>> records = [];
 
@@ -44,6 +45,15 @@ class _ListPageState extends State<ListPage> {
   void initState() {
     super.initState();
     _loadRecords();
+    _loadUsername();
+  }
+
+  void _loadUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String savedUsername = prefs.getString('username')??'';
+    setState(() {
+      _username=savedUsername;
+    });
   }
 
   // Load Records function will be used to fetch 
@@ -168,9 +178,11 @@ class _ListPageState extends State<ListPage> {
               ),
             ),
             const SizedBox(height: 16),
-            const Text(
-              "Hello, User!",
-              style: TextStyle(
+            Text(
+              usernameEditingController.text.isEmpty
+              ?"Hello, User!"
+              :"Hello, $_username!",
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
